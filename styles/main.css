@@ -346,15 +346,12 @@ body {
 .product-description {
   font-size: 0.9rem;
   color: #6b7280;
-
   margin-bottom: 15px;
-
   line-height: 1.5;
-
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
-
   overflow: hidden;
 }
 
