@@ -1,98 +1,204 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Commerce Frontend</title>
-  <link rel="stylesheet" href="styles/main.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>ShopEase</title>
+
+  <link
+    rel="stylesheet"
+    href="styles/main.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
 </head>
+
 <body>
-    
-     <header class="header">
+
+  <!-- HEADER -->
+  <header class="header">
 
     <!-- LOGO -->
     <div class="logo">
       ShopEase
     </div>
 
-    <!-- NAVIGATION -->
+    <!-- NAV -->
     <nav class="navbar">
+
       <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
+
+        <li>
+          <a href="index.html">
+            Home
+          </a>
+        </li>
+
+        <li>
+          <a href="#products">
+            Products
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            About
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            Contact
+          </a>
+        </li>
+
       </ul>
+
     </nav>
 
-    <!-- RIGHT SIDE -->
+    <!-- RIGHT -->
     <div class="header-right">
 
-      <!-- SEARCH BAR -->
+      <!-- SEARCH -->
       <div class="search-box">
-        <input type="text" placeholder="Search products..." />
+
+        <input
+          type="text"
+          placeholder="Search products..."
+        />
+
         <i class="fas fa-search"></i>
+
       </div>
 
       <!-- CART -->
-      <a href="cart.html" class="cart" style="color: white;">
+      <a
+        href="cart.html"
+        class="cart"
+      >
+
         <i class="fas fa-shopping-cart"></i>
-       <span class="cart-count" id="cartCount">0</span>
+
+        <span
+          class="cart-count"
+          id="cartCount"
+        >
+          0
+        </span>
+
       </a>
+
+      <!-- AUTH -->
+      <div class="auth-actions">
+
+        <a
+          href="auth.html"
+          id="loginBtn"
+          class="auth-btn"
+        >
+          Login
+        </a>
+
+        <button
+          id="logoutBtn"
+          class="auth-btn"
+          style="display:none;"
+        >
+          Logout
+        </button>
+
+      </div>
 
       <!-- HAMBURGER -->
       <div class="hamburger">
+
         <i class="fas fa-bars"></i>
+
       </div>
 
     </div>
 
   </header>
 
-  <!-- HERO SECTION -->
-<section class="hero">
+  <!-- HERO -->
+  <section class="hero">
 
-  <div class="hero-content">
+    <div class="hero-content">
 
-    <h1>Biggest Sale of the Year</h1>
+      <h1>
+        Biggest Sale of the Year
+      </h1>
 
-    <p>
-      Discover premium products with exclusive discounts up to 70% off.
-      Limited time offer — shop now before it ends.
-    </p>
+      <p>
+        Discover premium products with
+        exclusive discounts up to 70% off.
+      </p>
 
-    <a href="#products" class="hero-btn">
-      Shop Now
-    </a>
+      <a
+        href="#products"
+        class="hero-btn"
+      >
+        Shop Now
+      </a>
 
-  </div>
+    </div>
 
-</section>
+  </section>
 
-<!-- PRODUCTS SECTION -->
-<section class="products-section" id="products">
+  <!-- PRODUCTS -->
+  <section
+    class="products-section"
+    id="products"
+  >
 
-  <h2 class="section-title">
-    Featured Products
-  </h2>
+    <h2 class="section-title">
+      Featured Products
+    </h2>
 
-  <!-- LOADING -->
-  <div class="loading" id="loading">
-    Loading products...
-  </div>
+    <!-- LOADING -->
+    <div
+      class="loading"
+      id="loading"
+    >
+      Loading products...
+    </div>
 
-  <!-- ERROR -->
-  <div class="error-message" id="errorMessage">
-    Failed to load products.
-  </div>
+    <!-- ERROR -->
+    <div
+      class="error-message"
+      id="errorMessage"
+    >
+      Failed to load products.
+    </div>
 
-  <!-- PRODUCT GRID -->
-  <div class="products-grid" id="productsGrid"></div>
+    <!-- GRID -->
+    <div
+      class="products-grid"
+      id="productsGrid"
+    >
 
-</section>
-    <script src="scripts/cart.js"></script>
-    <script src="scripts/app.js"></script>
+    </div>
+
+  </section>
+
+  <script
+    type="module"
+    src="scripts/app.js"
+  ></script>
 
 </body>
+
 </html>
+

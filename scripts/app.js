@@ -1,88 +1,200 @@
+import { auth }
+from "./firebase.js";
+
+import {
+
+  onAuthStateChanged,
+
+  signOut
+
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+/* GLOBAL PRODUCTS */
 let allProducts = [];
-const hamburger = document.querySelector(".hamburger");
-const navbar = document.querySelector(".navbar");
 
-hamburger.addEventListener("click", () => {
-  navbar.classList.toggle("active");
-});
+/* NAV */
+const hamburger =
+  document.querySelector(".hamburger");
 
+const navbar =
+  document.querySelector(".navbar");
 
-const productsGrid = document.getElementById("productsGrid");
-const loading = document.getElementById("loading");
-const errorMessage = document.getElementById("errorMessage");
+hamburger.addEventListener(
+  "click",
+  () => {
 
-/* API URL */
-const API_URL = "https://fakestoreapi.com/products";
+    navbar.classList.toggle("active");
+  }
+);
+
+/* ELEMENTS */
+const productsGrid =
+  document.getElementById("productsGrid");
+
+const loading =
+  document.getElementById("loading");
+
+const errorMessage =
+  document.getElementById("errorMessage");
+
+const loginBtn =
+  document.getElementById("loginBtn");
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+/* API */
+const API_URL =
+  "https://fakestoreapi.com/products";
+
+/* CART FUNCTIONS */
+function getCart() {
+
+  return JSON.parse(
+    localStorage.getItem("cart")
+  ) || [];
+}
+
+function saveCart(cart) {
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+}
+
+function updateCartCount() {
+
+  const cart = getCart();
+
+  const totalItems = cart.reduce(
+
+    (total, item) =>
+
+      total + (item.quantity || 0),
+
+    0
+  );
+
+  const cartCount =
+    document.getElementById("cartCount");
+
+  if (cartCount) {
+
+    cartCount.textContent =
+      totalItems;
+  }
+}
+
+function addToCart(productData) {
+
+  let cart = getCart();
+
+  const existingProduct =
+    cart.find(
+
+      item =>
+
+        item.id === productData.id &&
+        item.size === productData.size
+    );
+
+  if (existingProduct) {
+
+    existingProduct.quantity +=
+      productData.quantity;
+
+  } else {
+
+    cart.push(productData);
+  }
+
+  saveCart(cart);
+
+  updateCartCount();
+
+  return true;
+}
 
 /* FETCH PRODUCTS */
 async function fetchProducts() {
 
   try {
 
-    /* SHOW LOADING */
-    loading.style.display = "block";
+    loading.style.display =
+      "block";
 
-    /* CHECK CACHE */
-const cachedProducts =
-  localStorage.getItem("products");
+    const cachedProducts =
+      localStorage.getItem("products");
 
-if (cachedProducts) {
+    if (cachedProducts) {
 
-  const parsedProducts =
-    JSON.parse(cachedProducts);
+      const parsedProducts =
+        JSON.parse(cachedProducts);
 
-  /* IMPORTANT */
-  allProducts = parsedProducts;
+      allProducts =
+        parsedProducts;
 
-  displayProducts(parsedProducts);
+      displayProducts(
+        parsedProducts
+      );
 
-  loading.style.display = "none";
+      loading.style.display =
+        "none";
 
-  return;
-}
-
-    /* FETCH API */
-    const response = await fetch(API_URL);
-
-    /* HANDLE BAD RESPONSE */
-    if (!response.ok) {
-      throw new Error("Failed to fetch products");
+      return;
     }
 
-    const products = await response.json();
+    const response =
+      await fetch(API_URL);
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Failed to fetch products"
+      );
+    }
+
+    const products =
+      await response.json();
+
     allProducts = products;
 
-    /* STORE IN CACHE */
     localStorage.setItem(
       "products",
       JSON.stringify(products)
     );
 
-    /* DISPLAY */
     displayProducts(products);
 
   } catch (error) {
 
     console.error(error);
 
-    errorMessage.style.display = "block";
+    errorMessage.style.display =
+      "block";
 
   } finally {
 
-    loading.style.display = "none";
+    loading.style.display =
+      "none";
   }
 }
 
-/* DISPLAY PRODUCTS */
+/* DISPLAY */
 function displayProducts(products) {
 
   productsGrid.innerHTML = "";
 
   products.forEach(product => {
 
-    const card = document.createElement("div");
+    const card =
+      document.createElement("div");
 
-    card.classList.add("product-card");
+    card.classList.add(
+      "product-card"
+    );
 
     card.innerHTML = `
 
@@ -94,13 +206,16 @@ function displayProducts(products) {
 
       <div class="product-info">
 
-        <a href="product.html?id=${product.id}" class="product-link">
+        <a
+          href="product.html?id=${product.id}"
+          class="product-link"
+        >
 
-  <h3 class="product-title">
-    ${product.title}
-  </h3>
+          <h3 class="product-title">
+            ${product.title}
+          </h3>
 
-</a>
+        </a>
 
         <p class="product-description">
           ${product.description}
@@ -110,48 +225,43 @@ function displayProducts(products) {
           $${product.price}
         </p>
 
-       <button
-  class="add-cart-btn"
-  data-id="${product.id}"
->
-  Add to Cart
-</button>
+        <button
+          class="add-cart-btn"
+          data-id="${product.id}"
+        >
+          Add to Cart
+        </button>
 
       </div>
     `;
 
     productsGrid.appendChild(card);
-
   });
 }
 
- /* ADD TO CART */
+/* ADD TO CART */
 document.addEventListener(
   "click",
   (e) => {
 
     const button =
-      e.target.closest(".add-cart-btn");
+      e.target.closest(
+        ".add-cart-btn"
+      );
 
     if (!button) return;
 
-    const card =
-      button.closest(".product-card");
-
-    if (!card) return;
-
-    const id =
+    const productId =
       Number(button.dataset.id);
 
-    /* FIND PRODUCT */
     const product =
       allProducts.find(
-        item => item.id === id
+        item =>
+          item.id === productId
       );
 
     if (!product) return;
 
-    /* ADD TO CART */
     addToCart({
 
       id: product.id,
@@ -167,7 +277,6 @@ document.addEventListener(
       size: "M"
     });
 
-    /* FEEDBACK */
     button.textContent =
       "Added ✓";
 
@@ -180,6 +289,43 @@ document.addEventListener(
   }
 );
 
-/* INITIAL LOAD */
-fetchProducts();
+/* AUTH STATE */
+onAuthStateChanged(
+  auth,
+  (user) => {
 
+    if (user) {
+
+      loginBtn.style.display =
+        "none";
+
+      logoutBtn.style.display =
+        "block";
+
+    } else {
+
+      loginBtn.style.display =
+        "block";
+
+      logoutBtn.style.display =
+        "none";
+    }
+  }
+);
+
+/* LOGOUT */
+logoutBtn.addEventListener(
+  "click",
+  async () => {
+
+    await signOut(auth);
+
+    window.location.href =
+      "auth.html";
+  }
+);
+
+/* INITIAL */
+updateCartCount();
+
+fetchProducts();

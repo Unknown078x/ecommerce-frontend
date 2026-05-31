@@ -731,6 +731,173 @@ body {
   padding: 80px 20px;
 }
 
+
+/* AUTH */
+.auth-section {
+
+  min-height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 40px;
+}
+
+.auth-container {
+
+  width: 100%;
+  max-width: 450px;
+
+  background: white;
+
+  padding: 40px;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* TABS */
+.auth-tabs {
+
+  display: flex;
+
+  margin-bottom: 30px;
+}
+
+.tab-btn {
+
+  flex: 1;
+
+  padding: 15px;
+
+  border: none;
+
+  background: #e5e7eb;
+
+  cursor: pointer;
+
+  font-weight: bold;
+}
+
+.tab-btn.active {
+
+  background: #111827;
+
+  color: white;
+}
+
+/* FORMS */
+.auth-form {
+
+  display: none;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.auth-form.active {
+
+  display: flex;
+}
+
+/* INPUT */
+.input-group {
+
+  position: relative;
+}
+
+.input-group input {
+
+  width: 100%;
+
+  padding: 15px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 10px;
+
+  font-size: 1rem;
+}
+
+/* PASSWORD */
+.password-group {
+
+  position: relative;
+}
+
+.toggle-password {
+
+  position: absolute;
+
+  right: 15px;
+  top: 18px;
+
+  cursor: pointer;
+}
+
+/* BUTTON */
+.auth-form button {
+
+  padding: 15px;
+
+  border: none;
+
+  background: #111827;
+
+  color: white;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-size: 1rem;
+}
+
+/* ERROR */
+.error {
+
+  color: crimson;
+
+  font-size: 0.8rem;
+}
+
+/* STRENGTH */
+.password-strength {
+
+  font-size: 0.9rem;
+
+  font-weight: bold;
+}
+
+/* FORGOT */
+.forgot-password {
+
+  text-align: right;
+
+  font-size: 0.9rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* MOBILE */
 @media (max-width: 768px) {
 
