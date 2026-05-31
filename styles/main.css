@@ -941,6 +941,10 @@ body {
     padding: 15px 20px;
   }
 
+  .logo{
+    font-size: 15px;
+  }
+
   /* NAVIGATION MOBILE */
   .navbar {
     position: absolute;
@@ -952,7 +956,6 @@ body {
 
     max-height: 0;
     overflow: hidden;
-
     transition: max-height 0.4s ease;
   }
 
@@ -962,13 +965,14 @@ body {
 
   .nav-links {
     flex-direction: column;
-    padding: 20px;
+    padding: 15px;
     gap: 20px;
   }
 
   /* SEARCH SMALLER */
   .search-box input {
-    width: 160px;
+    width: 80px;
+    height: 12px;
   }
 
   /* SHOW HAMBURGER */
