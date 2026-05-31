@@ -87,9 +87,13 @@ function displayProducts(products) {
 
       <div class="product-info">
 
-        <h3 class="product-title">
-          ${product.title}
-        </h3>
+        <a href="product.html?id=${product.id}" class="product-link">
+
+  <h3 class="product-title">
+    ${product.title}
+  </h3>
+
+</a>
 
         <p class="product-description">
           ${product.description}
@@ -129,3 +133,4 @@ document.addEventListener("click", (e) => {
 
 /* INITIAL LOAD */
 fetchProducts();
+
