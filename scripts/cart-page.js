@@ -1,3 +1,24 @@
+import {
+
+  getCart,
+
+  saveCart,
+
+  removeFromCart,
+
+  updateCartCount
+
+}
+from "./cart.js";
+
+import { auth }
+from "./firebase.js";
+
+import {
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 const cartItems =
   document.getElementById("cartItems");
 
@@ -6,6 +27,8 @@ const cartTotal =
 
 const checkoutBtn =
   document.getElementById("checkoutBtn");
+
+
 
 /* LOAD CART */
 function loadCart() {
@@ -218,6 +241,18 @@ if (checkoutBtn) {
     }
   );
 }
+
+onAuthStateChanged(
+  auth,
+  (user) => {
+
+    if (!user) {
+
+      window.location.href =
+        "auth.html";
+    }
+  }
+);
 
 /* INITIAL LOAD */
 loadCart();

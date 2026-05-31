@@ -1,33 +1,70 @@
+import { auth }
+from "./firebase.js";
+
+/* GET USER CART KEY */
+function getCartKey() {
+
+  const user =
+    auth.currentUser;
+
+  if (!user) {
+
+    return null;
+  }
+
+  return `cart_${user.email}`;
+}
+
 /* GET CART */
-function getCart() {
+export function getCart() {
+
+  const cartKey =
+    getCartKey();
+
+  if (!cartKey) {
+
+    return [];
+  }
 
   return JSON.parse(
-    localStorage.getItem("cart")
+
+    localStorage.getItem(cartKey)
+
   ) || [];
 }
 
 /* SAVE CART */
-function saveCart(cart) {
+export function saveCart(cart) {
+
+  const cartKey =
+    getCartKey();
+
+  if (!cartKey) return;
 
   localStorage.setItem(
-    "cart",
+
+    cartKey,
+
     JSON.stringify(cart)
   );
 }
 
-/* UPDATE CART COUNT */
-function updateCartCount() {
+/* UPDATE COUNT */
+export function updateCartCount() {
 
-  const cart = getCart();
+  const cart =
+    getCart();
 
-  const totalItems = cart.reduce(
+  const totalItems =
 
-    (total, item) =>
+    cart.reduce(
 
-      total + (item.quantity || 0),
+      (total, item) =>
 
-    0
-  );
+        total + (item.quantity || 0),
+
+      0
+    );
 
   const cartCount =
     document.getElementById("cartCount");
@@ -40,32 +77,31 @@ function updateCartCount() {
 }
 
 /* ADD TO CART */
-function addToCart(productData) {
+export function addToCart(productData) {
 
-  if (!productData) {
-    return false;
-  }
+  /* BLOCK IF NOT LOGGED IN */
+  if (!auth.currentUser) {
 
-  productData.quantity =
-    Number(productData.quantity);
+    alert(
+      "Please login first."
+    );
 
-  if (
-    isNaN(productData.quantity) ||
-    productData.quantity <= 0
-  ) {
+    window.location.href =
+      "auth.html";
+
     return false;
   }
 
   let cart = getCart();
 
-  /* CHECK EXISTING ITEM */
-  const existingProduct = cart.find(
+  const existingProduct =
+    cart.find(
 
-    item =>
+      item =>
 
-      item.id === productData.id &&
-      item.size === productData.size
-  );
+        item.id === productData.id &&
+        item.size === productData.size
+    );
 
   if (existingProduct) {
 
@@ -84,8 +120,11 @@ function addToCart(productData) {
   return true;
 }
 
-/* REMOVE ITEM */
-function removeFromCart(id, size) {
+/* REMOVE */
+export function removeFromCart(
+  id,
+  size
+) {
 
   let cart = getCart();
 
@@ -99,23 +138,3 @@ function removeFromCart(id, size) {
 
   updateCartCount();
 }
-
-/* INITIAL LOAD */
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    updateCartCount();
-
-  }
-);
-
-/* CROSS TAB SYNC */
-window.addEventListener(
-  "storage",
-  () => {
-
-    updateCartCount();
-
-  }
-);

@@ -265,10 +265,33 @@ onAuthStateChanged(
 
     if (user) {
 
-      console.log(
-        "Logged in:",
-        user.email
-      );
+      loginBtn.style.display =
+        "none";
+
+      logoutBtn.style.display =
+        "block";
+
+      /* LOAD USER CART */
+      updateCartCount();
+
+    } else {
+
+      loginBtn.style.display =
+        "block";
+
+      logoutBtn.style.display =
+        "none";
+
+      /* RESET CART UI */
+      const cartCount =
+        document.getElementById(
+          "cartCount"
+        );
+
+      if (cartCount) {
+
+        cartCount.textContent = "0";
+      }
     }
   }
 );

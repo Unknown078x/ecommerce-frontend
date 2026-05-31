@@ -1,3 +1,10 @@
+import {
+
+  addToCart
+
+}
+from "./cart.js";
+
 const productDetail =
   document.getElementById("productDetail");
 
