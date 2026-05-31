@@ -1,3 +1,4 @@
+let allProducts = [];
 const hamburger = document.querySelector(".hamburger");
 const navbar = document.querySelector(".navbar");
 
@@ -22,18 +23,23 @@ async function fetchProducts() {
     loading.style.display = "block";
 
     /* CHECK CACHE */
-    const cachedProducts = localStorage.getItem("products");
+const cachedProducts =
+  localStorage.getItem("products");
 
-    if (cachedProducts) {
+if (cachedProducts) {
 
-      const parsedProducts = JSON.parse(cachedProducts);
+  const parsedProducts =
+    JSON.parse(cachedProducts);
 
-      displayProducts(parsedProducts);
+  /* IMPORTANT */
+  allProducts = parsedProducts;
 
-      loading.style.display = "none";
+  displayProducts(parsedProducts);
 
-      return;
-    }
+  loading.style.display = "none";
+
+  return;
+}
 
     /* FETCH API */
     const response = await fetch(API_URL);
@@ -44,6 +50,7 @@ async function fetchProducts() {
     }
 
     const products = await response.json();
+    allProducts = products;
 
     /* STORE IN CACHE */
     localStorage.setItem(
@@ -103,12 +110,12 @@ function displayProducts(products) {
           $${product.price}
         </p>
 
-        <button
-          class="add-cart-btn"
-          data-id="${product.id}"
-        >
-          Add to Cart
-        </button>
+       <button
+  class="add-cart-btn"
+  data-id="${product.id}"
+>
+  Add to Cart
+</button>
 
       </div>
     `;
@@ -118,18 +125,60 @@ function displayProducts(products) {
   });
 }
 
-/* ADD TO CART */
-document.addEventListener("click", (e) => {
+ /* ADD TO CART */
+document.addEventListener(
+  "click",
+  (e) => {
 
-  if (e.target.classList.contains("add-cart-btn")) {
+    const button =
+      e.target.closest(".add-cart-btn");
 
-    const productId = e.target.dataset.id;
+    if (!button) return;
 
-    alert(`Product ${productId} added to cart`);
+    const card =
+      button.closest(".product-card");
 
+    if (!card) return;
+
+    const id =
+      Number(button.dataset.id);
+
+    /* FIND PRODUCT */
+    const product =
+      allProducts.find(
+        item => item.id === id
+      );
+
+    if (!product) return;
+
+    /* ADD TO CART */
+    addToCart({
+
+      id: product.id,
+
+      title: product.title,
+
+      price: product.price,
+
+      image: product.image,
+
+      quantity: 1,
+
+      size: "M"
+    });
+
+    /* FEEDBACK */
+    button.textContent =
+      "Added ✓";
+
+    setTimeout(() => {
+
+      button.textContent =
+        "Add to Cart";
+
+    }, 1500);
   }
-
-});
+);
 
 /* INITIAL LOAD */
 fetchProducts();
